@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>xuelizuoye01</title>
+        <style>
+            .red{
+                color: red;
+                font-weight: 550;
+            }
+            .box1{
+                width: 480px;
+                height: 120px;
+                margin-bottom: 20px;
+            }
+            .box2{
+                width: 480px;
+                height: 90px;
+                margin-bottom: 20px;
+            }
+            .mark{
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>毕业生信息</h1>
+        </header>
+        <section>
+            <fieldset class="box1">
+                <legend class="red">学生信息</legend>
+                <form id="testform" method="get" action="">
+                    姓&nbsp;&nbsp;名&nbsp;<input type="text" name="name" form="testform" autofocus="autofocus" placeholder="请输入姓名" required/><span class="mark">&nbsp;*</span>
+                    <br/>
+                    学&nbsp;&nbsp;号&nbsp;<input type="number" name="idnum" form="testform" placeholder="请输入学号" required/><span class="mark">&nbsp;*</span>
+                    <br/>
+                    手&nbsp;&nbsp;机&nbsp;<input type="tel" name="phonenum" form="testform" placeholder="请输入手机号" required/><span class="mark">&nbsp;*</span>
+                    <br/>
+                    邮&nbsp;&nbsp;箱&nbsp;<input type="email" name="email" form="testform" placeholder="请输入邮箱地址" required/><span class="mark">&nbsp;*</span>
+                </form>
+            </fieldset>
+        </section>
+        <section>
+            <fieldset class="box2">
+                <legend class="red">录取情况</legend>
+                <form method="get" action="">
+                    录取学校&nbsp;<input type="text" name="school" form="testform"/>
+                    <br/>
+                    入学成绩&nbsp;<input type="text" name="grade" form="testform"/>
+                    <br/>
+                    入学时间&nbsp;<input type="date" name="time" form="testform"/>
+                </form>
+            </fieldset>
+        </section>
+        <footer>
+            <form>
+                <input type="submit" value="提交" form="testform"/>
+            </form>
+        </footer>
+    </body>
+</html>
