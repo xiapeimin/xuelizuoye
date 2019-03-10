@@ -45,7 +45,19 @@
             <fieldset class="box2">
                 <legend class="red">录取情况</legend>
                 <form method="get" action="">
-                    录取学校&nbsp;<input type="text" name="school" form="testform"/>
+                    录取学校&nbsp;<input type="search" name="seal" list="names" form="testform"/>
+		            <datalist id="names">
+                        <option></option>
+			            <option>河北师范大学</option>
+                        <option>河北地质大学</option>
+                        <option>河北医科大学</option>
+                        <option>河北科技大学</option>
+                        <option>石家庄铁道大学</option>
+                        <option>北京大学</option>
+                        <option>湖南师范大学</option>
+                        <option>中南大学</option>
+                        <option>湘潭大学</option>
+		            </datalist>
                     <br/>
                     入学成绩&nbsp;<input type="text" name="grade" form="testform"/>
                     <br/>
