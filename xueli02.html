@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task02</title>
+    <style>
+        .big{
+            width: 430px;
+            height: 180px;
+            margin: 0 auto;
+            border:10px solid #edeff1;
+        }
+        #box{
+            width: 420px;
+            height: 170px;
+            border: 1px solid #ccd4da;
+            border-radius: 2px;
+            margin: 0 auto;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+        #need{
+            width: 210px;
+            height: 45px;
+        }
+        #check{
+            width: 146px;
+            height: 40px;
+        }
+        .changeborder:focus { 
+            outline:orange Solid 2px;
+        }
+        #previous{
+            font-size: 17px;
+            margin-top: -1px;
+        }
+        p{
+            word-break:break-all;
+        }
+        mark{
+            background: #d8dbdd;
+        }
+        #box2{
+            width: 370px;
+            height: 80px;
+            margin-top: -5px;
+            margin-right: 8px;
+            float: left;
+        }
+        #box3{
+            float: left;
+            width: 26px;
+            height: 26px;
+            margin-top: 25px;
+            background: #dae0e0;
+            font-size: 20px;
+            text-align: center;
+        }
+        span{
+            display: block;
+            float: left;
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+        a{
+            text-decoration-line: none;
+        }
+        #del{
+            color: #ffffff;
+        }
+        #nostore{
+            width: 370px;
+            height: 50px;
+            display: none;
+        }
+        #nostore p{
+            font-size: 20px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="big">
+        <div id="box">
+            <form>
+                <input type="search" name="shop" placeholder="请输入想查找的商品" autofocus="autofocus" id="need" class="changeborder"/>
+                <input type="submit" value="搜索" id="check"/>
+            </form>
+            <p id="previous">最近搜索</p>
+            <div id="box2">
+                <div id="nostore"><p>无存储记录</p></div>               
+            </div>
+            <div id="box3"><a href="#" id="del">X</a></div>
+        </div>
+    </div>
+    
+    <script>
+        var keyName = [];
+        var keyValue = [];
+        var need = document.getElementById("need");
+        var check = document.getElementById("check");
+        var box = document.getElementById("box2");
+        var nostore = document.getElementById("nostore");
+        var sp = document.getElementsByTagName("span");
+        var index = 0;
+        var flag;
+        
+        for(var a = localStorage.length;a >= 0;a--){
+            if(localStorage.key(a) != null){
+                keyName[index] = localStorage.key(a);
+                keyValue[index] = localStorage[keyName[index]];
+                var p = document.createElement("span");
+                p.innerHTML = '<a href="#">'+"<mark>"+keyValue[keyValue.length-1]+"</mark>"+'</a>';
+                p.style.marginRight = "10px";
+                box.insertBefore(p,null);
+                index++;           
+            }
+            
+        }
+        if(index > 0){
+            nostore.style.display = "none";
+        }else{
+            nostore.style.display = "block";
+        }
+
+        check.onclick = function(){
+            if(!window.localStorage){
+                alert("您的浏览器不支持localstorage！");
+            }else{
+                if(need.value != ""){
+                    nostore.style.display = "none";
+                    //去重功能
+                    flag = -1;//标志
+                    for(var a2 = localStorage.length-1;a2 >= 0;a2--){      
+                        if(need.value == localStorage[localStorage.key(a2)]){                            
+                            flag = a2;     
+                            break;
+                        }
+                    }                  
+                    if(flag == -1){
+                        var time = new Date();
+                        var nowTime = time.getTime();
+                        var text = need.value;
+                        var length1 = keyName.length;
+                        var length2 = keyValue.length;
+                        keyName[length1] = nowTime;
+                        keyValue[length2] = text;
+                        for(var i = length1;i < keyName.length;i++){
+                            localStorage.setItem(keyName[i], keyValue[i]);
+                        }
+                        var p = document.createElement("span");
+                        var first = document.getElementsByTagName("span")[0];
+                        p.innerHTML = '<a href="#">'+"<mark>"+keyValue[keyValue.length-1]+"</mark>"+'</a>';
+                        p.style.marginRight = "10px";
+                        box.insertBefore(p,first);
+                    }else{                      
+                        var index2 = localStorage.length - flag -1;
+                        var text2 = keyValue[index2];
+                        for(flag;flag < localStorage.length;flag++){
+                            if(flag == localStorage.length-1){
+                                localStorage[localStorage.key(flag)] = text2;
+                            }else{
+                                localStorage[localStorage.key(flag)] = localStorage[localStorage.key(flag+1)];
+                            }                            
+                        }
+
+                        for(var r = index2;r >= 0;r--){
+                            if(r == 0){
+                                keyValue[0] = text2; 
+                                sp[0].innerHTML = '<mark>'+text2+'</mark>';
+                            }else{
+                                keyValue[r] = keyValue[r-1];
+                                sp[r].innerHTML = sp[r-1].innerHTML;
+                            }                         
+                        }
+                        return false;                    
+                    }      
+                }         
+            }
+        }
+
+        var box3 = document.getElementById("box3");
+        box3.onclick = function(){ 
+            if(window.confirm("是否清除全部数据？")){
+                //var sp = document.getElementsByTagName("span");
+                var sum = sp.length;          
+                for(var s = 0;s < sum;s++){
+                    box.removeChild(sp[0]);
+                }
+                keyName = [];
+                keyValue = [];
+                localStorage.clear();
+                nostore.style.display = "block";
+            }          
+        }
+        box3.onmouseover = function(){
+            box3.style.background = "#f75555";
+        }
+        box3.onmouseout = function(){
+            box3.style.background = "#dae0e0";
+        }     
+        
+    </script>
+    
+</body>
+</html>
