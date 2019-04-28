@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>task03</title>
+    <style>
+        canvas{
+            position: absolute;          
+        }     
+        #box{
+            width: 400px;
+            height: 200px;           
+            text-align: center;
+            position: absolute;
+            background:paleturquoise;
+            color: lightcoral;
+        }
+        #present{
+            font-size: 60px;
+            text-align: center;
+        }
+        #tit{
+            width: 400px;
+            height: 90px;          
+            line-height: 90px;
+            font-size: 18px;
+            color:lightpink;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="tit">快来刮奖啦~~~ 一，二，三等奖等你哦！</div>
+    <div id="box">
+        <p id="present"></p>
+    </div>
+    <canvas id="canvas1" width="400" height="200">
+        您的浏览器不支持 canvas 元素，请更换或更新浏览器
+    </canvas>
+    
+    
+    <script>
+        var canvas1 = document.getElementById("canvas1");
+        context = canvas1.getContext("2d");
+        var flag = false;
+
+        var text = ["一等奖","二等奖","三等奖","幸运奖","安慰奖","特等奖"];
+        var present = document.getElementById("present");
+        var num = Math.floor(Math.random()*6);
+        console.log(num);
+        present.innerHTML = text[num];
+
+        context.fillStyle = "#ccd4da";
+        context.fillRect(0,0,400,200);
+        context.fill();
+        context.globalCompositeOperation = "destination-out";
+
+        var tit = document.getElementById("tit");
+        var w = parseInt((window.innerWidth-400)/2);
+        tit.style.marginLeft = w + "px";
+        //console.log(window.innerWidth);
+        //console.log(w);
+        var box = document.getElementById("box");
+        box.style.marginLeft = w + "px";
+        canvas1.style.marginLeft = w + "px";
+        
+        //刮奖
+        function drawArc(e){
+            e.preventDefault();
+            if(flag){
+                if(e.changedTouches){
+                    e = e.changedTouches[e.changedTouches.length - 1];
+                }
+                var top = e.clientY - 90;  
+                var left = e.clientX - w;              
+                //console.log(top,left);
+                context.beginPath();
+                context.fillStyle = "white";
+                context.arc(left,top,10,0,2*Math.PI);
+                context.fill();
+                context.closePath();
+                console.log(judgePercentage(context,400,200));
+                if(judgePercentage(context,400,200) >= 0.85){ //像素比大于85%刮奖成功
+                    context.clearRect(0,0,400,200);
+                    window.confirm("恭喜获得"+text[num]);
+                }
+            }
+        }
+
+        //判断是否刮奖成功
+        var judgePercentage = function(obj,width,height) {
+            var imgData = obj.getImageData(0, 0, width, height);//获得canvas的像素信息
+            var sumpx = imgData.data;
+            var presentpx = [];
+            var j = sumpx.length;
+            for (var i = 0; i < j; i += 4) {   
+                var alp = sumpx[i + 3];//获取存储alpha通道的值
+                if (alp === 0) { //alpha通道为0，代表透明                
+                    presentpx.push(i);
+                }
+            }
+            return presentpx.length/(sumpx.length/4);
+        }
+
+        //PC端       
+        canvas1.onclick = function(){
+            flag = true;
+        }
+        canvas1.onmousedown = function(event){
+            event.preventDefault();
+            flag = true;
+        }
+        canvas1.onmousemove = function(event){
+            drawArc(event);
+        }
+        canvas1.onmouseup = function(){
+            flag = false;
+        }
+        canvas1.onmouseout = function(){
+            flag = false;
+        } 
+      
+        //手机端(手指触摸触发事件)
+        canvas1.touchstart = function(event){
+            event.preventDefault();
+            flag = true;
+        }
+        canvas1.touchmove = function(event){
+            drawArc(event);
+        }
+        canvas1.touchend = function(){
+            flag = false;
+        }
+
+
+
+    </script>
+</body>
+</html>
