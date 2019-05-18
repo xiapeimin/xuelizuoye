@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>task04</title>
+    <style>
+        .outbox{
+            width: 400px;
+            height: 500px;
+            margin: 0 auto;
+            position: relative;
+            background: #ffffff;
+            border: 4px solid  rgba(209, 211, 209, 0.733);
+            overflow: hidden;
+        }
+        #box1{
+            width: 400px;
+            height: 300px;
+            position: relative;
+            background-size: cover;   
+            overflow: hidden;
+            transition: height 1s ease-in;  
+        }
+        #rightbox1{
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            float: right;
+            position:absolute;
+            right: 25px;
+            top: 25px;
+            background: rgb(241, 100, 5);
+            color: white;
+            text-align: center;
+            line-height: 0;
+            font-weight: bold;
+        }
+        #leftbox1{
+            width: 80px;
+            height: 30px;
+            position:absolute;
+            bottom: 0;
+            background: rgb(241, 100, 5);
+            float: left;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+        }
+        #box2{
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 20px;
+            width: 340px;
+            height: 80px;
+            background: #ffffff;         
+        }
+        #p1{
+            color: rgb(241, 100, 5);
+            font-size: 20px;
+        }
+        #p2{
+            color: #8a8787;              
+            padding-left: 30px;
+            padding-right: 30px;
+            width: 340px;
+            height: 50px;
+            line-height: 1.8em;      
+            background: #ffffff;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 1s,height 1.8s;
+        }
+        #p3{
+            color: rgba(159, 160, 158, 0.733);
+            padding-left: 30px;
+            position: absolute;
+            bottom: 20px;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        .outbox:hover #box1{
+            height: 150px;                                      
+        }          
+        .outbox:hover #p2{
+            opacity: 1;
+            height: 160px;   
+        }
+        .outbox:hover #box1 #yy{
+            box-shadow: 0px 0px 200px rgb(56, 55, 55) inset;           
+        }
+        .outbox:hover #box1 img{            
+            transform: scale(2);                    
+        }       
+        .outbox:hover{
+            border: 4px solid rgba(149, 151, 149, 0.733);           
+        }
+        span{
+            font-size: 25px;
+            font-weight: bolder;
+        }
+        img{
+            width: 400px;
+            height: 300px;
+            transition: transform 1s ease-in;
+        }
+        #yy{
+            width: 400px;
+            height: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            float: left;
+            box-shadow: none;
+            transition: box-shadow 1s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="outbox">        
+        <div id="box1">
+            <img src="img/zhanqiao.jpg" />
+            <div id="yy"></div>
+            <div id="rightbox1">
+                <p>15</p>
+                <p>五月</p>
+            </div>
+            <div id="leftbox1">照片</div>            
+        </div>       
+        <div id="box2">
+            <span><a href="#">青岛栈桥</a></span>
+            <p id="p1">国家AAAA级旅游景区</p>          
+        </div>
+        <div id="p2">青岛栈桥是青岛海滨风景区的景点之一，是国务院于1992年首批公布的国家级风景名胜区。青岛栈桥位于游人如织的青岛中山路，
+                桥身从海岸探入如弯月般的青岛湾深处。桥身供游人参观并在此停靠旅游船，由此乘船可看海上青岛。
+        </div>
+        <div id="p3">10分钟前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;123评论</div>       
+    </div>
+    
+</body>
+</html>
